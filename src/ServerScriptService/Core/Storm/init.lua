@@ -1,0 +1,37 @@
+--- {Requires} ---
+local Attributes = require(game:GetService("ReplicatedStorage").Types.Attributes)
+local Types = require(game:GetService("ServerScriptService").Core.Types)
+
+--- {Variables} ---
+local FolderToLoad = {
+    game:GetService("ReplicatedStorage").Shared, script.Services, script.Classes,
+}
+
+
+local Storm = {
+    Classes = {},
+    Services = {},
+    Shared = {},
+    Attributes = Attributes,
+}
+
+
+--- {Functions} ---
+
+function Storm:Init()
+    for _, Folder in FolderToLoad do
+
+        for _, File in Folder:GetChildren() do
+            if not File:IsA("ModuleScript") then continue end
+
+            task.spawn(function()
+                local success, Module = pcall(require, File)
+                if not success then return end
+
+                Storm[Folder.Name][File.Name] = Module
+            end)
+        end
+    end
+end
+
+return Storm :: Types.StormTypes

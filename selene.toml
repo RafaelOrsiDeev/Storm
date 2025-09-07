@@ -1,0 +1,7 @@
+std = "roblox"
+
+[files]
+ignore = [
+  "src/ServerScriptService/PlayerDataService/ProfileStore.luau",
+  "src/pasta_ignorada/**"
+]
