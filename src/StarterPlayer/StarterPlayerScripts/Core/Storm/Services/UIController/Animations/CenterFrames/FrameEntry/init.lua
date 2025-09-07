@@ -1,7 +1,10 @@
+--- {Variables} ---
+local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
+
 --- {Requires} ---
-local TweenModule = require(script.Parent.Parent.Parent.Parent.Parent.Tween)
-local Storm = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
-local HudAnimations = require(script.Parent.Parent.Hud.Hud)
+local TweenModule = require(Core.Storm.Services.Tween)
+local Storm = require(Core.Storm)
+local HudAnimations = require(script.Parent.Parent.Hud.Manager)
 
 local module = {}
 

@@ -2,7 +2,7 @@
 local ProfileStore = require(game:GetService("ServerStorage").Packages.ProfileStore)
 local Profiles = require(game:GetService("ServerStorage").ProfilesData)
 local Leaderstats = require(script.Leaderstats)
-local Storm = require(script.Parent.Core.Storm)
+local Storm = require(script.Parent.Parent)
 
 -- {Interfaces} ---
 local IData = require(game:GetService("ReplicatedStorage").Types.IData)
@@ -50,6 +50,7 @@ local function LoadProfile(Player: Player)
 
     profile:AddUserId(Player.UserId)
     profile:Reconcile()
+    profile.Player = Player
 
     profile.OnSessionEnd:Connect(function()
         DestroyProfile(Player)
@@ -60,8 +61,6 @@ local function LoadProfile(Player: Player)
         Profiles[Player] = profile
 
         Leaderstats.CreatedLeaderstats(Player, profile)
-
-        workspace:SetAttribute("ProfileLoaded", true)
     else
         profile:EndSession()
     end
@@ -80,6 +79,13 @@ end
 
 Players.PlayerAdded:Connect(LoadProfile)
 Players.PlayerRemoving:Connect(PlayerRemoving)
+
+function module.GetProfile(Player: Player)
+    repeat task.wait() 
+        until Profiles[Player]
+        
+    return Profiles[Player]
+end
 
 ProfileStore.OnError:Connect(function(message, _, key)
     local playerId = string.gsub(key, "P_", "")

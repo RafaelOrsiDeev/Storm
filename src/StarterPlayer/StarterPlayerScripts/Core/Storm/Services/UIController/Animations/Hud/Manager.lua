@@ -1,6 +1,9 @@
+--- {Variables} ---
+local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
+
 --- {Requires} ---
-local TweenModule = require(script.Parent.Parent.Parent.Parent.Parent.Tween)
-local Storm = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
+local Storm = require(Core.Storm)
+local TweenModule = require(Core.Storm.Services.Tween)
 
 --- {Variables} ---
 local HudFolder = Storm.PlayerGui:WaitForChild("MainUI"):WaitForChild("Hud") :: Folder

@@ -1,15 +1,23 @@
-local module = {}
+--- {Variables} ---
+local ServerScriptService = game:GetService("ServerScriptService")
 
-local IPlayer = require(game:GetService("ServerScriptService").Core.Types.IPlayer)
-local IReplica = require(game:GetService("ServerScriptService").Core.Types.IReplica)
+--- {Requires} ---
+local IReplica = require(ServerScriptService.Core.Storm.Services.Replica.IReplica)
 local IData = require(game:GetService("ReplicatedStorage").Types.IData)
 
 
-export type Type = {
+local module = {}
+
+export type ControllerType = typeof(require(script.Parent.Controller))
+
+export type PlayerType = {
     Player: Player,
     Replica: IReplica.ReplicaType,
     Data: IData.Type,
-    GetPlayer: (Player: Player) -> IPlayer.Type,
+} & ControllerType
+
+export type Type = {
+    GetPlayer: (Player: Player) -> PlayerType,
 }
 
 return module

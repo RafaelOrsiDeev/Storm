@@ -1,27 +1,36 @@
---- {Requires} ---
-local ReplicaService = require(game:GetService("ServerStorage").Packages.ReplicaServer)
-local Profiles = require(game:GetService("ServerStorage").ProfilesData)
-
 --- {Interfaces} ---
-local IProfile = require(game:GetService("ReplicatedStorage").Types.IProfile)
+local IReplica = require(script.IReplica)
+local IProfile = require(script.Parent.ProfileService.IProfile)
+
+--- {Requires} ---
+local ReplicaService  = require(game:GetService("ServerStorage").Packages.ReplicaServer) :: IReplica.ReplicaType
+
 
 --- {Variables} ---
 
 local module = {}
 
-function module.CreateReplica(TokenName: string, Player: Player)
+function module.CreateReplica(TokenName: string, Profile: IProfile.ProfileType): IReplica.ReplicaType?
     local TOKEN = ReplicaService.Token(TokenName)
-    local Profile = (Profiles[Player] :: IProfile.ProfileType)
+    if not TOKEN or typeof(TOKEN) ~= "table" then return end
 
     local Replica = ReplicaService.New({
         Token = TOKEN,
         Data = Profile.Data
     })
 
-    repeat task.wait() until ReplicaService.ReadyPlayers[Player]
-    Replica:Subscribe(Player)
+    repeat task.wait() until ReplicaService.ReadyPlayers[Profile.Player]
+    
+    Replica:Subscribe(Profile.Player)
 
+    module[TokenName] = Replica
     return Replica
+end
+
+function module.GetReplica(TokenName: string): IReplica.ReplicaTokenType?
+    if not module[TokenName] then return end
+
+    return module[TokenName]
 end
 
 

@@ -1,11 +1,13 @@
---- {Requires} ---
-local Attributes = require(game:GetService("ReplicatedStorage").Types.Attributes)
-local Types = require(game:GetService("ServerScriptService").Core.Types)
-
 --- {Variables} ---
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
 local FolderToLoad = {
-    game:GetService("ReplicatedStorage").Shared, script.Services, script.Classes,
+    ReplicatedStorage.Shared, script.Services, script.Classes,
 }
+
+--- {Requires} ---
+local Attributes = require(ReplicatedStorage.Types.Attributes)
+local Types = require(game:GetService("ServerStorage").Types)
 
 
 local Storm = {
@@ -20,7 +22,6 @@ local Storm = {
 
 function Storm:Init()
     for _, Folder in FolderToLoad do
-
         for _, File in Folder:GetChildren() do
             if not File:IsA("ModuleScript") then continue end
 

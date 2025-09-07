@@ -69,7 +69,7 @@ MAD STUDIO
 
 local ReplicaShared = game.ReplicatedStorage.Packages.ReplicaShared
 local Remote = require(ReplicaShared.Remote)
-local Signal = require(ReplicaShared.Signal)
+local Signal = require(game.ReplicatedStorage.Packages.Signal)
 local Maid = require(ReplicaShared.Maid)
 
 ----- Private -----

@@ -10,6 +10,7 @@ local module = {}
 
 local function ChangeData(Replica: IReplica.ReplicaClient)
    Replica:OnChange(function(_, Path, _, _)
+      
    end)
 end
 

@@ -5,18 +5,15 @@ local IData = require(game:GetService("ReplicatedStorage").Types.IData)
 local module = {}
 
 
--- Tipagem de Signal (simplificada)
 export type Signal = {
     Fire: (self: any, ...any) -> (),
     Connect: (self: any, listener: (...any) -> ()) -> {Disconnect: (self: any) -> ()},
 }
 
--- Tipagem de um Replica Token
 export type ReplicaTokenType = {
     Name: string
 }
 
--- Tipagem do MAD Replica (copiada diretamente do ReplicaServer.lua)
 export type ReplicaType = {
     Tags: {[any]: any},
     Data: IData.Type,
@@ -26,6 +23,7 @@ export type ReplicaType = {
     Children: {[ReplicaType]: boolean?},
     BoundInstance: Instance?,
     OnServerEvent: {Connect: (self: any, listener: (Player, ...any) -> ()) -> ({Disconnect: (self: any) -> ()})},
+    OnSet: Signal,
     Maid: any,
 
     Set: (self: any, path: {string}, value: any) -> (),
@@ -62,6 +60,12 @@ export type ReplicaModule = {
         ReplicationAllReplicas: {[ReplicaType]: boolean},
         SelectiveSubscriptions: {[Player]: {[ReplicaType]: boolean}}
     },
+}
+
+
+export type Type = {
+    CreateReplica: (TokenName: string, Player: Player) -> ReplicaType,
+    GetReplica: (TokenName: string) -> ReplicaType?,
 }
 
 return module

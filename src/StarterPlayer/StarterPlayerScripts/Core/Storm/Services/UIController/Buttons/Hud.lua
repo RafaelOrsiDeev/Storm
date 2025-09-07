@@ -1,14 +1,18 @@
+--- {Variables} ---
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
+
 --- {Requires} ---
-local ConnectionModule = require(game:GetService("ReplicatedStorage").Packages.ConnectionManager)
-local TweenModule = require(script.Parent.Parent.Parent.Tween)
-local HudAnimations = require(script.Parent.Parent.Animations.Frames.Hud.Hud)
-local Storm = require(script.Parent.Parent.Parent.Parent)
-local Validation = require(game:GetService("ReplicatedStorage").Packages.Verification)
+local Storm = require(Core.Storm)
+local ConnectionModule = require(ReplicatedStorage.Packages.ConnectionManager)
+local TweenModule = require(Core.Storm.Services.Tween)
+local HudAnimations = require(script.Parent.Parent.Animations.Hud.Manager)
+local Validation = require(ReplicatedStorage.Packages.Verification)
 
 
 --- {Variables} ---
 local ConnectionManager = ConnectionModule.new()
-local FrameEntryAnimation = require(script.Parent.Parent.Animations.Frames.CenterFrames.FrameEntry)
+local FrameEntryAnimation = require(Core.Storm.Services.UIController.Animations.CenterFrames.FrameEntry)
 
 
 local module = {}

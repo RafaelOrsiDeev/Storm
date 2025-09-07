@@ -1,12 +1,12 @@
 --- {Requires} ---
 local CollectionService = game:GetService("CollectionService")
-local IBUutons = require(script.IButtons)
+local IButtons = require(script.IButtons)
 
 
 local module = {}
 module.__index = module
 
-module.Class = {} :: IBUutons.ClassType
+module.Class = {} :: IButtons.ClassType
 
 for _, Child in script:GetChildren() do
     if not Child:IsA("ModuleScript") then continue end
