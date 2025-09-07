@@ -1,13 +1,14 @@
 --- {Requires} ---
-local Verification = require(game:GetService("ReplicatedStorage").Packages.Verification)
-local RemoteEvent: RemoteEvent = game:GetService("ReplicatedStorage").Remotes.Event
 local Storm = require(script.Parent.Parent)
+
+--- {Variables} ---
+local RemoteEvent: RemoteEvent = game:GetService("ReplicatedStorage").Remotes.Event
 
 
 local module = {}
 
 function module:Fire(Player: Player, SendData: boolean, TableParam: {string}, ...)
-    local success, ErrorMesage = Verification.ValidateParams({ {Player, "Instance"}, {SendData, "boolean"}, {TableParam, "table"}})
+    local success, ErrorMesage = Storm.Packages.Verification:ValidateParams({ {Player, "Instance"}, {SendData, "boolean"}, {TableParam, "table"}})
     if not success then 
         warn(ErrorMesage)
         return 
@@ -17,7 +18,7 @@ function module:Fire(Player: Player, SendData: boolean, TableParam: {string}, ..
 end
 
 function module:FireAll(TableParam: {string}, ...)
-    local success, ErrorMesage = Verification.ValidateParams({{TableParam, "table"}})
+    local success, ErrorMesage = Storm.Packages.Verification:ValidateParams({{TableParam, "table"}})
     if not success then 
         warn(ErrorMesage)
         return 
@@ -27,7 +28,7 @@ function module:FireAll(TableParam: {string}, ...)
 end
 
 function module:Server(TableParam: {string}, ...)
-    local success, ErrorMesage = Verification.ValidateParams({{TableParam, "table"}})
+    local success, ErrorMesage = Storm.Packages.Verification:ValidateParams({{TableParam, "table"}})
     if not success then 
         warn(ErrorMesage)
         return 
@@ -44,7 +45,7 @@ function module:Server(TableParam: {string}, ...)
 end
 
 RemoteEvent.OnServerEvent:Connect(function(Player: Player, TableParam: {string}, ...)
-    local successValidate, ErrorMesage = Verification.ValidateParams({ {Player, "Instance"}, {TableParam, "table"},})
+    local successValidate, ErrorMesage = Storm.Packages.Verification:ValidateParams({ {Player, "Instance"}, {TableParam, "table"},})
     if not successValidate then 
         warn(ErrorMesage)
         return 

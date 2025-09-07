@@ -1,5 +1,5 @@
 --- {Interfaces} ---
-local IData = require(game:GetService("ReplicatedStorage").Types.IData)
+local IData = require(game:GetService("ReplicatedStorage").PlayerUtils.Shared.TemplateData.IData)
 
 local module = {}
 

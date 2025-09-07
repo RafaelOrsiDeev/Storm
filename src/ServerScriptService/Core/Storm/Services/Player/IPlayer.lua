@@ -1,9 +1,9 @@
 --- {Variables} ---
-local ServerScriptService = game:GetService("ServerScriptService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 --- {Requires} ---
-local IReplica = require(ServerScriptService.Core.Storm.Services.Replica.IReplica)
-local IData = require(game:GetService("ReplicatedStorage").Types.IData)
+local IReplica = require(ReplicatedStorage.Packages.ReplicaServer.IReplicaServer)
+local IData = require(ReplicatedStorage.PlayerUtils.Shared.TemplateData.IData)
 
 
 local module = {}
@@ -12,7 +12,7 @@ export type ControllerType = typeof(require(script.Parent.Controller))
 
 export type PlayerType = {
     Player: Player,
-    Replica: IReplica.ReplicaType,
+    Replica: IReplica.Type,
     Data: IData.Type,
 } & ControllerType
 

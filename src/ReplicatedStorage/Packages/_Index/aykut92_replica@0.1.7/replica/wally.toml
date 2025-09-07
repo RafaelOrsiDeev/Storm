@@ -1,8 +1,0 @@
-[package]
-name = "aykut92/replica"
-description = "Replica is a Roblox server to client state replication solution by LM-loleris"
-version = "0.1.7"
-registry = "https://github.com/UpliftGames/wally-index"
-realm = "shared"
-
-[dependencies]

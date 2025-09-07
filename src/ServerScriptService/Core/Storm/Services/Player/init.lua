@@ -1,12 +1,15 @@
+--- {Variables} ---
+local Services = game:GetService("ServerScriptService").Core.Storm.Services
+local PlayerUtils = game:GetService("ReplicatedStorage").PlayerUtils
+
 --- {Requires} ---
-local ProfileService = require(script.Parent.ProfileService)
-local ReplicaService = require(script.Parent.Replica)
+local ReplicaService = require(Services.Replica)
 local Controller = require(script.Controller)
 
 --- {Interfaces} ---
-local IData = require(game:GetService("ReplicatedStorage").Types.IData)
+local IData = require(PlayerUtils.Shared.TemplateData.IData)
+local IReplica = require(Services.Replica.IReplica)
 local IPlayer = require(script.IPlayer)
-local IReplica = require(script.Parent.Replica.IReplica)
 
 --- {Variables} ---
 local Storage: {[Player]: IPlayer.PlayerType} = {}
@@ -15,8 +18,8 @@ local module = {}
 
 --- {Functions} ---
 
-function module._GetReplica(Player: Player): IReplica.ReplicaType
-    local Profile = ProfileService.GetProfile(Player)
+function module._GetReplica(Player: Player): IReplica.Type
+    local Profile = ReplicaService.GetProfile(Player)
     
     local DataReplica = ReplicaService.CreateReplica("PlayerData", Profile)
     

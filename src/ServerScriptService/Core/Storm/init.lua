@@ -2,28 +2,29 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local FolderToLoad = {
-    ReplicatedStorage.Shared, script.Services, script.Classes,
+    script.Services, script.Classes,
 }
 
 --- {Requires} ---
-local Attributes = require(ReplicatedStorage.Types.Attributes)
+local Multipliers = require(ReplicatedStorage.PlayerUtils.Multipliers)
 local Types = require(game:GetService("ServerStorage").Types)
 
 
 local Storm = {
     Classes = {},
     Services = {},
-    Shared = {},
-    Attributes = Attributes,
+    Multipliers = Multipliers,
 }
 
+Storm.Shared = ReplicatedStorage.Shared
+Storm.Packages = ReplicatedStorage.Packages
 
 --- {Functions} ---
 
 function Storm:Init()
     for _, Folder in FolderToLoad do
         for _, File in Folder:GetChildren() do
-            if not File:IsA("ModuleScript") then continue end
+            if not File:IsA("ModuleScript") or File.Name == "I" .. Folder.Name then continue end
 
             task.spawn(function()
                 local success, Module = pcall(require, File)

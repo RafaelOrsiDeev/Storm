@@ -1,14 +1,15 @@
 --- {Requires} ---
 local Storm = require(script.Parent.Parent)
-local ReplicaService = require(game:GetService("ReplicatedStorage").Packages.ReplicaClient)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicaService = require(ReplicatedStorage.Packages.ReplicaClient)
 
 --- {Interfaces} ---
-local IReplica = require(game:GetService("StarterPlayer").StarterPlayerScripts.Core.Types.IReplica)
+local IReplica = require(ReplicatedStorage.Packages.ReplicaClient.IReplica)
 
 local module = {}
 
 
-local function ChangeData(Replica: IReplica.ReplicaClient)
+local function ChangeData(Replica: IReplica.Type)
    Replica:OnChange(function(_, Path, _, _)
       
    end)
