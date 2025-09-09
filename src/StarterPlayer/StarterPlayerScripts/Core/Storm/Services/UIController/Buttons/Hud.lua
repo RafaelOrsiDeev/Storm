@@ -1,19 +1,18 @@
 --- {Variables} ---
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
+local Animations = ReplicatedStorage.PlayerUtils.Animations.UIController
 
 --- {Requires} ---
-local Storm = require(Core.Storm)
 local ConnectionModule = require(ReplicatedStorage.Packages.ConnectionManager)
-local TweenModule = require(Core.Storm.Services.Tween)
-local HudAnimations = require(script.Parent.Parent.Animations.Hud.Manager)
-local Validation = require(ReplicatedStorage.Packages.Verification)
+local Validate = require(ReplicatedStorage.Packages.Validate)
 
 
 --- {Variables} ---
 local ConnectionManager = ConnectionModule.new()
-local FrameEntryAnimation = require(Core.Storm.Services.UIController.Animations.CenterFrames.FrameEntry)
-
+local MouseClickAnimation = require(Animations.Buttons.Hud.MouseClick)
+local MouseHoverAnimation = require(Animations.Buttons.Hud.MouseHover)
+local MouseUnhoverAnimation = require(Animations.Buttons.Hud.MouseUnhover)
 
 local module = {}
 module.__index = module
@@ -24,39 +23,32 @@ end
 
 function module:ButtonClick() 
     self:_Connection("Click", self.Button.MouseButton1Click, function()
-        local Tween = TweenModule:PulseOnce(self.Button.UIScale, TweenInfo.new(0.1), {Scale = 0.9}, 0)
-        Tween.Completed:Wait()
 
-        HudAnimations:HudVisible()
-
-        local Frame = Storm.CenterFrames[self.Button.Name]
-        FrameEntryAnimation:Open(Frame)
+        MouseClickAnimation:Load(self.Button)
     end)
 end
 
 
 function module:ButtonHover()
     self:_Connection("Hover", self.Button.MouseEnter, function()
-        TweenModule:TweenTo(self.Button.UIScale, TweenInfo.new(0.1), {Scale = 1.1})
+
+        MouseHoverAnimation:Load(self.Button)
     end)
 end
 
 function module:ButtonUnhover()
     self:_Connection("UnHover", self.Button.MouseLeave, function()
-        TweenModule:TweenTo(self.Button.UIScale, TweenInfo.new(0.1), {Scale = 1})
+
+        MouseUnhoverAnimation:Load(self.Button)
     end)
 end
 
 
 function module.Init(Button: TextButton | ImageButton)
-    local Success, ErrorMessage = Validation.ValidateParams({{Button, "Instance"}})
-    if not Success then 
-        warn(ErrorMessage)
-        return
-    end
+    local Success = Validate:Params({{Button, "Instance"}})
+    if not Success then return end
 
     local self = setmetatable({}, module)
-
     self.Button = Button
 
     self:ButtonClick()

@@ -4,12 +4,12 @@ local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
 --- {Requires} ---
 local TweenModule = require(Core.Storm.Services.Tween)
 local Storm = require(Core.Storm)
-local HudAnimations = require(script.Parent.Parent.Hud.Manager)
+local HudAnimations = require(script.Parent.Parent.Hud.Hide)
 
 local module = {}
 
 local function SetupCreate(Frame: ImageLabel)
-    HudAnimations:HudHide()
+    HudAnimations:Load()
     Frame.Position = UDim2.fromScale(0.5, 1.5)
     Frame.Visible = true
     

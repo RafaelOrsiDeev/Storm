@@ -4,7 +4,7 @@ local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
 --- {Requires} ---
 local TweenModule = require(Core.Storm.Services.Tween)
 local Storm = require(Core.Storm)
-local HudAnimations = require(script.Parent.Parent.Hud.Manager)
+local HudAnimations = require(script.Parent.Parent.Hud.Show)
 
 local module = {}
 
@@ -33,7 +33,7 @@ function module:CloseAll()
         })
 
         Tween.Completed:Wait()
-        HudAnimations:HudVisible()
+        HudAnimations:Load()
     end 
 end
 

@@ -1,17 +1,25 @@
+--- {Variables} ---
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Packages = ReplicatedStorage.Packages
+
 --- {Requires} ---
 local Storm = require(script.Parent.Parent)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ReplicaService = require(ReplicatedStorage.Packages.ReplicaClient)
+local Validate = require(Packages.Validate)
+local Handlers = require(script.Handlers)
 
 --- {Interfaces} ---
-local IReplica = require(ReplicatedStorage.Packages.ReplicaClient.IReplica)
+local IReplica = require(Packages.ReplicaClient.IReplicaClient)
 
 local module = {}
 
 
 local function ChangeData(Replica: IReplica.Type)
+   local Success = Validate:Params({{Replica, "table"}})
+   if not Success then return end
+
    Replica:OnChange(function(_, Path, _, _)
-      
+      Handlers:ChangeData(Path)
    end)
 end
 

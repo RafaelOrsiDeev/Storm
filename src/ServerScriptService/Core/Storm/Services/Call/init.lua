@@ -1,38 +1,30 @@
---- {Requires} ---
-local Storm = require(script.Parent.Parent)
-
 --- {Variables} ---
 local RemoteEvent: RemoteEvent = game:GetService("ReplicatedStorage").Remotes.Event
+local Packages = game:GetService("ReplicatedStorage").Packages
 
+--- {Requires} ---
+local Storm = require(script.Parent.Parent)
+local Validate = require(Packages.Validate)
 
 local module = {}
 
-function module:Fire(Player: Player, SendData: boolean, TableParam: {string}, ...)
-    local success, ErrorMesage = Storm.Packages.Verification:ValidateParams({ {Player, "Instance"}, {SendData, "boolean"}, {TableParam, "table"}})
-    if not success then 
-        warn(ErrorMesage)
-        return 
-    end
+function module:Fire(Player: Player, TableParam: {string}, ...)
+    local Success = Validate:Params({{Player, "Instance"}, {TableParam, "table"}})
+    if not Success then return end
 
     RemoteEvent:FireClient(Player, TableParam, ...)
 end
 
 function module:FireAll(TableParam: {string}, ...)
-    local success, ErrorMesage = Storm.Packages.Verification:ValidateParams({{TableParam, "table"}})
-    if not success then 
-        warn(ErrorMesage)
-        return 
-    end
+    local Success = Validate:Params({{TableParam, "table"}})
+    if not Success then return end
 
     RemoteEvent:FireAllClients(TableParam, ...)
 end
 
 function module:Server(TableParam: {string}, ...)
-    local success, ErrorMesage = Storm.Packages.Verification:ValidateParams({{TableParam, "table"}})
-    if not success then 
-        warn(ErrorMesage)
-        return 
-    end
+    local Success = Validate:Params({{TableParam, "table"}})
+    if not Success then return end
 
     local Module = Storm[TableParam[1]][TableParam[2]]
     if not Module then return end
@@ -45,11 +37,9 @@ function module:Server(TableParam: {string}, ...)
 end
 
 RemoteEvent.OnServerEvent:Connect(function(Player: Player, TableParam: {string}, ...)
-    local successValidate, ErrorMesage = Storm.Packages.Verification:ValidateParams({ {Player, "Instance"}, {TableParam, "table"},})
-    if not successValidate then 
-        warn(ErrorMesage)
-        return 
-    end
+    local Success = Validate:Params({{Player, "Instance"}, {TableParam, "table"}})
+    if not Success then return end
+
 
     local Module = Storm[TableParam[1]][TableParam[2]]
     if not Module then return end

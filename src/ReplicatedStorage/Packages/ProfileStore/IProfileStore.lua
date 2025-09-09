@@ -26,6 +26,9 @@ export type Type<T> = {
 	MessageHandler: (self: any, fn: (message: JSONAcceptable, processed: () -> ()) -> ()) -> (),
 	Save: (self: any) -> (),
 	SetAsync: (self: any) -> (),
+
+	-- New --
+	Player: Player
 }
 
 export type VersionQuery<T> = {

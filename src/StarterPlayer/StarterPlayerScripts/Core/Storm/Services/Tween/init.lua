@@ -1,17 +1,25 @@
+--- {Variables} ---
+local Packages = game:GetService("ReplicatedStorage").Packages
 local TweenService = game:GetService("TweenService")
+
+--- {Requires} ---
+local Validate = require(Packages.Validate)
 
 local module = {}
 module._States = {}
 
 function module:TweenPlay(Object: Instance, TweenInfo: TweenInfo, Properties: { [any]: any })
+    local Success = Validate:Params({{Object, "Instance"}, {TweenInfo, "TweenInfo"}, {Properties, "table"}})
+    if not Success then return end
+
     local Tween = TweenService:Create(Object, TweenInfo, Properties)
     Tween:Play()
     return Tween
 end
 
--- Tween direto (sem toggle)
 function module:TweenTo(Object: Instance, TweenInfo: TweenInfo, Properties: { [any]: any })
-    if not Object then return end
+    local Success = Validate:Params({{Object, "Instance"}, {TweenInfo, "TweenInfo"}, {Properties, "table"}})
+    if not Success then return end
 
     local State = self._States[Object] or {}
     self._States[Object] = State
@@ -30,9 +38,9 @@ function module:TweenTo(Object: Instance, TweenInfo: TweenInfo, Properties: { [a
     return Tween
 end
 
--- Tween com alternância (toggle)
 function module:TweenToggle(Object: Instance, TweenInfo: TweenInfo, Properties: { [any]: any })
-    if not Object then return end
+    local Success = Validate:Params({{Object, "Instance"}, {TweenInfo, "TweenInfo"}, {Properties, "table"}})
+    if not Success then return end
 
     local State = self._States[Object] or {}
     self._States[Object] = State
@@ -63,6 +71,9 @@ end
 
 -- Callback ao terminar
 function module:Callback(Object: Instance, TweenInfo: TweenInfo, Properties: { [any]: any }, Callback: (() -> ())?)
+    local Success = Validate:Params({{Object, "Instance"}, {TweenInfo, "TweenInfo"}, {Properties, "table"}, {Callback, "function"}})
+    if not Success then return end
+
     local Tween = self:TweenTo(Object, TweenInfo, Properties)
 
     if Tween and Callback then
@@ -74,6 +85,9 @@ end
 
 -- PulseOnce (anima -> espera -> volta)
 function module:PulseOnce(Object: Instance, TweenInfo: TweenInfo, Properties: { [any]: any }, DelayTime: number)
+    local Success = Validate:Params({{Object, "Instance"}, {TweenInfo, "TweenInfo"}, {Properties, "table"}, {DelayTime, "number"}})
+    if not Success then return end
+
     if not Object then return end
 
     local State = self._States[Object] or {}

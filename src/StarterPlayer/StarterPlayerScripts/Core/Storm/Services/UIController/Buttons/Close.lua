@@ -1,56 +1,57 @@
 --- {Variables} ---
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
+local Packages = ReplicatedStorage.Packages
+local Animation = ReplicatedStorage.PlayerUtils.Animations.UIController
 
 --- {Requires} ---
 local ConnectionModule = require(ReplicatedStorage.Packages.ConnectionManager)
-local TweenModule = require(Core.Storm.Services.Tween)
-local Validation = require(ReplicatedStorage.Packages.Verification)
+local Validate = require(Packages.Validate)
 
 
 --- {Variables} ---
 local ConnectionManager = ConnectionModule.new()
-local FrameLeaveAnimation = require(Core.Storm.Services.UIController.Animations.CenterFrames.FrameLeave)
-
+local MouseClickAnimation = require(Animation.Buttons.Close.MouseClick)
+local MouseHoverAnimation = require(Animation.Buttons.Close.MouseHover)
+local MouseUnhoverAnimation = require(Animation.Buttons.Close.MouseUnhover)
 
 local module = {}
 module.__index = module
 
 function module:_Connection(key: string, Connection: RBXScriptSignal, CallBack: () -> ())
+    local Success = Validate:Params({{Connection, "RBXScriptSignal"}, {CallBack, "function"}})
+    if not Success then return end
+
     ConnectionManager:Add(string.format("%s_%s", self.Button.Name, key), Connection:Connect(CallBack))
 end
 
 function module:ButtonClick() 
     self:_Connection("Click", self.Button.MouseButton1Click, function()
-        TweenModule:PulseOnce(self.Button.UIScale, TweenInfo.new(0.1), {Scale = 0.9}, 0)
 
-        FrameLeaveAnimation:CloseAll()
+        MouseClickAnimation:Load(self.Button)
     end)
 end
 
 
 function module:ButtonHover()
     self:_Connection("Hover", self.Button.MouseEnter, function()
-        TweenModule:TweenTo(self.Button.UIScale, TweenInfo.new(0.1), {Scale = 1.07})
+        MouseHoverAnimation:Load(self.Button)
     end)
 end
 
 function module:ButtonUnhover()
     self:_Connection("UnHover", self.Button.MouseLeave, function()
-        TweenModule:TweenTo(self.Button.UIScale, TweenInfo.new(0.1), {Scale = 1})
+
+        MouseUnhoverAnimation:Load(self.Button)
     end)
 end
 
 
 function module.Init(Button: TextButton | ImageButton)
-    local Success, ErrorMessage = Validation.ValidateParams({{Button, "Instance"}})
-    if not Success then 
-        warn(ErrorMessage)
-        return
-    end
+    local Success = Validate:Params({{Button, "Instance"}})
+    if not Success then return end
 
     local self = setmetatable({}, module)
-
     self.Button = Button
 
     self:ButtonClick()

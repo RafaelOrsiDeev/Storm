@@ -85,11 +85,12 @@ MAD STUDIO
 
 ----- Dependencies -----
 
-local ReplicaShared = game.ReplicatedStorage.Packages.ReplicaShared
-local RateLimit = require(ReplicaShared.RateLimit)
-local Remote = require(ReplicaShared.Remote)
-local Signal = require(game.ReplicatedStorage.Packages.Signal)
-local Maid = require(ReplicaShared.Maid)
+local Packages = game.ReplicatedStorage.Packages
+
+local RateLimit = require(Packages.RateLimit)
+local Remote = require(Packages.Remote)
+local Signal = require(Packages.Signal)
+local Maid = require(Packages.Maid)
 
 ----- Private -----
 

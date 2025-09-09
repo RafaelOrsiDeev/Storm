@@ -1,18 +1,24 @@
+--- {Variables} ---
+local Packages = game:GetService("ReplicatedStorage").Packages
+
 --- {Interfaces} ---
-local IReplica = require(script.IReplica)
-local IProfile = require(script.Parent.ProfileService.IProfile)
+local IReplica = require(Packages.ReplicaServer.IReplicaServer)
+local IProfile = require(Packages.ProfileStore.IProfileStore)
 
 --- {Requires} ---
-local ReplicaService  = require(game:GetService("ServerStorage").Packages.ReplicaServer) :: IReplica.ReplicaType
+local ReplicaService  = require(Packages.ReplicaServer) 
+local Validate = require(Packages.Validate)
 
-
---- {Variables} ---
 
 local module = {}
 
-function module.CreateReplica(TokenName: string, Profile: IProfile.ProfileType): IReplica.ReplicaType?
+function module.CreateReplica(TokenName: string, Profile: IProfile.Type<any>): IReplica.Type?
+    local SuccessParams = Validate:Params({{TokenName, "string"}, {Profile, "table"}})
+    if not SuccessParams then return end
+
     local TOKEN = ReplicaService.Token(TokenName)
-    if not TOKEN or typeof(TOKEN) ~= "table" then return end
+    local SuccessToken = Validate:Params({{TokenName, "string"}, {Profile, "table"}})
+    if not SuccessToken then return end
 
     local Replica = ReplicaService.New({
         Token = TOKEN,
@@ -27,7 +33,10 @@ function module.CreateReplica(TokenName: string, Profile: IProfile.ProfileType):
     return Replica
 end
 
-function module.GetReplica(TokenName: string): IReplica.ReplicaTokenType?
+function module.GetReplica(TokenName: string): IReplica.Type?
+    local Success = Validate:Params({{TokenName, "string"}})
+    if not Success then return end
+
     if not module[TokenName] then return end
 
     return module[TokenName]

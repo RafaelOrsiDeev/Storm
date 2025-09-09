@@ -1,12 +1,13 @@
 --- {Requires} ---
 local Storm = require(script.Parent.Parent)
-local CollectionService = game:GetService("CollectionService")
 local CenterFramesModule = require(script.CenterFrames)
 local ButtonsModule = require(script.Buttons)
 
 
 --- {Variables} ---
 local MainFolder = Storm.PlayerGui:WaitForChild("MainUI") :: ScreenGui
+local CollectionService = game:GetService("CollectionService")
+
 
 
 local module = {}

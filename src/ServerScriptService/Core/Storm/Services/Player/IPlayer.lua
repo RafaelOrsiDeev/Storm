@@ -11,13 +11,11 @@ local module = {}
 export type ControllerType = typeof(require(script.Parent.Controller))
 
 export type PlayerType = {
-    Player: Player,
+    Instance: Player,
     Replica: IReplica.Type,
     Data: IData.Type,
 } & ControllerType
 
-export type Type = {
-    GetPlayer: (Player: Player) -> PlayerType,
-}
+export type Type = ControllerType
 
 return module

@@ -2,7 +2,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local FolderToLoad = {
-    ReplicatedStorage.Shared, script.Services,
+    ReplicatedStorage.PlayerUtils.Shared, script.Services,
 }
 local PlayerUtils = ReplicatedStorage.PlayerUtils
 
@@ -12,6 +12,7 @@ local Types = require(game:GetService("StarterPlayer").StarterPlayerScripts.Core
 
 local Storm = {
     Services = {},
+    Shared = {},
     Multipliers = Multipliers,
     CenterFrames = {},
     Data = {},
@@ -21,8 +22,6 @@ local Storm = {
 
 Storm.Player = game:GetService("Players").LocalPlayer
 Storm.PlayerGui = Storm.Player.PlayerGui
-Storm.Shared = PlayerUtils.Shared
-Storm.Packages = ReplicatedStorage.Packages
 
 
 --- {Functions} ---

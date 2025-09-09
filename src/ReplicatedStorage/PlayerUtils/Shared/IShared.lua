@@ -7,7 +7,7 @@ local PlayerUtils = game:GetService("ReplicatedStorage").PlayerUtils
 local IData = require(PlayerUtils.Shared.TemplateData.IData)
 
 export type Type = {
-    PlayerData: IData.Type,
+    TemplateData: IData.Type,
 }
 
 return module
