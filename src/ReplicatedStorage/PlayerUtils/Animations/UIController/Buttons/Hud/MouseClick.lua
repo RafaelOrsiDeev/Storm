@@ -3,12 +3,12 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage.Packages
 local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
 local Animation = ReplicatedStorage.PlayerUtils.Animations.UIController
+local FramesFolder = Animation.Frames.CenterFrames
 
 --- {Requires} ---
 local Storm = require(Core.Storm)
 local Validate = require(Packages.Validate)
 local TweenModule = require(Core.Storm.Services.Tween)
-local FrameEntryAnimation = require(Animation.Frames.CenterFrames.FrameEntry)
 local ShowHudAnimation = require(Animation.Frames.Hud.Show)
 
 
@@ -20,11 +20,12 @@ function module:Load(Button: TextButton | ImageButton)
 
     local Tween = TweenModule:PulseOnce(Button:WaitForChild("UIScale"), TweenInfo.new(0.1), {Scale = 0.9}, 0)
     Tween.Completed:Wait()
-
     ShowHudAnimation:Load()
 
     local Frame = Storm.CenterFrames[Button.Name]
-    FrameEntryAnimation:Open(Frame)
+    local FrameEntryAnimation = require(FramesFolder[Frame:GetAttribute("FrameType")].FrameEntry)
+
+    FrameEntryAnimation.Open(Frame)
 end
 
 return module

@@ -2,13 +2,10 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage.Packages
 local Core = game:GetService("Players").LocalPlayer.PlayerScripts.Core
-local Animation = ReplicatedStorage.PlayerUtils.Animations.UIController
-local FramesFolder = Animation.Frames.CenterFrames
 
 --- {Requires} ---
 local Validate = require(Packages.Validate)
 local TweenModule = require(Core.Storm.Services.Tween)
-local Storm = require(Core.Storm)
 
 
 
@@ -18,11 +15,7 @@ function module:Load(Button)
     local Success = Validate:Params({{Button, "Instance"}})
     if not Success then return end
 
-    TweenModule:PulseOnce(Button:WaitForChild("UIScale"), TweenInfo.new(0.1), {Scale = 0.9}, 0)
-
-    local Frame = Storm.CenterFrames[Button.Parent.Name]
-    local FrameExitAnimation = require(FramesFolder[Frame:GetAttribute("FrameType")].FrameExit)
-    FrameExitAnimation:CloseAll()
+    TweenModule:TweenCallback(Button:WaitForChild("UIScale"), TweenInfo.new(0.1), {Scale = 0.9})
 end
 
 return module

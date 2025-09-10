@@ -5,3 +5,6 @@ ignore = [
   "src/ServerScriptService/PlayerDataService/ProfileStore.luau",
   "src/pasta_ignorada/**"
 ]
+
+[checks]
+LocalShadow = false

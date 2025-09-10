@@ -1,5 +1,6 @@
 --- {Variables} ---
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ModulesToFile = {}
 
 local FolderToLoad = {
     ReplicatedStorage.PlayerUtils.Shared, script.Services, script.Classes,
